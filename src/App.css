@@ -1,42 +1,90 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+*{box-sizing:border-box}
+body{margin:0;background:#2e5ae8;font-family:ui-sans-serif,system-ui,Apple SD Gothic Neo,Segoe UI,Roboto,Helvetica,Arial;color:#111}
+:root{
+  --panel:#ffffff;          /* 바탕 패널 */
+  --chip:#cfe9ef;           /* 리스트 칩 배경(스크린샷의 연한 청록) */
+  --chip-hover:#bfe2ea;
+  --text:#0f172a;
+  --muted:#64748b;
+  --line:#e5e7eb;
+  --brand:#2e5ae8;          /* 버튼 파랑 */
+  --brand-dark:#2349c9;
+  --danger:#1e2aa6;         /* 삭제 버튼 보라색(아이콘 타일 느낌) */
+  --danger-dark:#162086;
+  --shadow:0 10px 30px rgba(0,0,0,.08);
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+#root {width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;}
+/* ============ Panel / Header ============ */
+.app{
+  max-width:clamp(320px,56vw,760px);
+  padding:clamp(18px,2.2vw,28px);
+  background:var(--panel);
+  border-radius:clamp(12px,1.4vw,16px);
+  box-shadow:var(--shadow);
+  transition: 0.7s;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
+.header{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem}
+.header h1{margin:0;font-size:clamp(18px,2vw,24px);color:var(--text)}
+.sub{margin:0;color:var(--muted);font-size:clamp(12px,1.2vw,14px)}
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* ============ Input Row ============ */
+.input-row{display:flex;gap:.6rem;margin-bottom:1rem}
+.input{
+  flex:1;padding:0.9rem 1rem;border:1.5px solid #c7d2fe;
+  border-radius:10px; outline:none; color:var(--text);
 }
+.input:focus{border-color:var(--brand)}
+.btn{
+  display: flex; align-items: center; justify-content: center;
+  padding:.8rem 1.1rem;border:none;border-radius:10px;cursor:pointer;
+  background:var(--brand);color:#fff;font-weight:600;
+  transition:transform .08s ease, background .2s ease, opacity .2s;
+}
+.btn:hover{background:var(--brand-dark)}
+.btn:active{transform:translateY(1px)}
+.btn:disabled{opacity:.6;cursor:not-allowed}
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* ============ Card List (Chip 스타일) ============ */
+.list{
+  list-style:none;margin:0;padding:0;display:flex;flex-direction:column;
+  gap:.7rem;
 }
+.item{
+  display:flex;align-items:center;justify-content:space-between;gap:.8rem;
+  padding:.85rem 1rem;border-radius:12px;border:1px solid #bcd8de;
+  background:var(--chip);
+  transition:background .2s ease, transform .12s ease, box-shadow .2s;
+}
+.item:hover{background:var(--chip-hover);transform:translateY(-1px)}
+.left{display:flex;align-items:center;gap:.7rem;min-width:0}
+.left input[type="checkbox"]{
+  width:20px;height:20px;accent-color:var(--brand);cursor:pointer
+}
+.text{color:var(--text);font-size:clamp(14px,1.2vw,16px);line-height:1.35;word-break:break-word}
+.text.done{color:#6b7280;text-decoration:line-through}
 
-.card {
-  padding: 2em;
+/* 편집 input */
+.edit-input{
+  padding:.5rem .7rem;border:1px solid #cbd5e1;border-radius:8px;
+  background:#fff;color:var(--text);min-width:180px;
 }
+.edit-input:focus{outline:none;border-color:var(--brand)}
 
-.read-the-docs {
-  color: #888;
+/* ============ Right Buttons ============ */
+.right{display:flex;gap:.5rem}
+
+/* 일반 버튼들(수정/저장/취소)은 톤다운 */
+.btn.ghost{background:#e8edff;color:#1e40af}
+.btn.success{background:#10b981}
+.btn.success:hover{background:#0ea371}
+
+/* 삭제 버튼: 보라색 정사각형 아이콘 타일 느낌 */
+.btn.danger{
+  width:42px;height:42px;padding:0;
+  border-radius:10px;background:var(--danger);
 }
+.btn.danger:hover{background:var(--danger-dark)}
+/* 텍스트 대신 아이콘 느낌(🗑️), 기존 "삭제" 글자는 숨김 */
+.btn.danger{font-size:0;line-height:0}
+.btn.danger::before{content:"🗑️";font-size:20px;line-height:1}
